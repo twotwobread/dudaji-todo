@@ -26,7 +26,7 @@ def create_todo():
     DB[new_todo.id] = new_todo
     return jsonify(
         Response(
-            HTTP_STATUS.OK, "Todo 생성 성공", new_todo.convert_json()
+            HTTP_STATUS.OK, "Create Todo Success", new_todo.convert_json()
         ).covert_json(),
     )
 
@@ -44,6 +44,6 @@ def get_todo(todo_id):
         )
     return jsonify(
         Response(
-            HTTP_STATUS.OK, "Todo 생성 성공", DB[todo_id].convert_json()
+            HTTP_STATUS.OK, "Read Todo Success", DB[todo_id].convert_json()
         ).covert_json()
     )
