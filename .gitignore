@@ -1,0 +1,5 @@
+# virtual enviroment
+.venv/*
+
+# cache data
+**/__pycache__
