@@ -9,6 +9,8 @@ packages = [{include = "dudaji_todo"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 flask = "^2.3.2"
+pytest = "^7.4.0"
+pytest-flask = "^1.2.0"
 
 
 [build-system]
