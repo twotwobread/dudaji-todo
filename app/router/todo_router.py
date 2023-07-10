@@ -31,7 +31,7 @@ def create_todo():
     )
 
 
-@bp.route("/<int:todo_id>")
+@bp.route("/<int:todo_id>", methods=("GET",))
 def get_todo(todo_id):
     if not todo_id in DB:
         return (
@@ -46,4 +46,31 @@ def get_todo(todo_id):
         Response(
             HTTP_STATUS.OK, "Read Todo Success", DB[todo_id].convert_json()
         ).covert_json()
+    )
+
+
+@bp.route("", methods=("GET",))
+def get_all_todo():
+    all_todo_list = list(map(lambda x: DB[x].convert_json(), DB.keys()))
+    return jsonify(
+        Response(
+            HTTP_STATUS.OK, "Read All Todo Success", all_todo_list
+        ).covert_json()
+    )
+
+
+@bp.route("/<int:todo_id>", methods=("DELETE",))
+def delete_todo(todo_id):
+    if not todo_id in DB:
+        return (
+            jsonify(
+                Response(
+                    HTTP_STATUS.NOT_FOUND, f"Not Found todo-id: {todo_id}"
+                ).covert_json(),
+            ),
+            HTTP_STATUS.NOT_FOUND,
+        )
+    del DB[todo_id]
+    return jsonify(
+        Response(HTTP_STATUS.OK, "Delete Todo Success").covert_json(),
     )
