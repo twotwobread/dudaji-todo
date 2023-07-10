@@ -27,6 +27,10 @@ class Todo:
     def status(self):
         return self.__status
 
+    @content.setter
+    def content(self, content):
+        self.__content = content
+
     @status.setter
     def status(self, status):
         self.__status = status

@@ -118,3 +118,38 @@ def update_todo_status(todo_id):
             update_todo.convert_json(),
         ).covert_json()
     )
+
+
+@bp.route("/<int:todo_id>/content", methods=("PATCH",))
+def update_todo_content(todo_id):
+    request_data = request.get_json()
+    if not request_data or len(request_data["content"]) <= 0:
+        return (
+            jsonify(
+                Response(
+                    HttpStatus.BAD_REQUEST,
+                    "Impossible blank content or null content",
+                ).covert_json(),
+            ),
+            HttpStatus.BAD_REQUEST,
+        )
+
+    if not todo_id in DB:
+        return (
+            jsonify(
+                Response(
+                    HttpStatus.NOT_FOUND, f"Not Found todo-id: {todo_id}"
+                ).covert_json(),
+            ),
+            HttpStatus.NOT_FOUND,
+        )
+
+    update_todo = DB[todo_id]
+    update_todo.content = request_data["content"]
+    return jsonify(
+        Response(
+            HttpStatus.OK,
+            "Update Todo Content Success",
+            update_todo.convert_json(),
+        ).covert_json()
+    )
