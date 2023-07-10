@@ -6,7 +6,7 @@ brew install poetry
 ```
 2. clone git repository
 ```  
-git clone <git-repository>
+git clone https://github.com/twotwobread/dudaji-todo.git
 ```
 3. set virtual env 
 ```
