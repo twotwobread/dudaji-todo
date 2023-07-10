@@ -74,3 +74,47 @@ def delete_todo(todo_id):
     return jsonify(
         Response(HttpStatus.OK, "Delete Todo Success").covert_json(),
     )
+
+
+@bp.route("/<int:todo_id>/status", methods=("PATCH",))
+def update_todo_status(todo_id):
+    request_data = request.get_json()
+    if not request_data or len(request_data["status"]) <= 0:
+        return (
+            jsonify(
+                Response(
+                    HttpStatus.BAD_REQUEST,
+                    "Impossible blank status or null status",
+                ).covert_json(),
+            ),
+            HttpStatus.BAD_REQUEST,
+        )
+
+    update_status = request_data["status"]
+    if not todo_id in DB:
+        return (
+            jsonify(
+                Response(
+                    HttpStatus.NOT_FOUND, f"Not Found todo-id: {todo_id}"
+                ).covert_json(),
+            ),
+            HttpStatus.NOT_FOUND,
+        )
+    if not update_status in Status.__members__:
+        return (
+            jsonify(
+                Response(
+                    HttpStatus.BAD_REQUEST, f"Not exist status: {update_status}"
+                ).covert_json(),
+            ),
+            HttpStatus.BAD_REQUEST,
+        )
+    update_todo = DB[todo_id]
+    update_todo.status = Status[update_status]
+    return jsonify(
+        Response(
+            HttpStatus.OK,
+            "Update Todo Status Success",
+            update_todo.convert_json(),
+        ).covert_json()
+    )

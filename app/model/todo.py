@@ -23,6 +23,14 @@ class Todo:
     def content(self):
         return self.__content
 
+    @property
+    def status(self):
+        return self.__status
+
+    @status.setter
+    def status(self, status):
+        self.__status = status
+
     def convert_json(self) -> dict:
         return {
             "id": self.__id,
