@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
 from app.model.todo import Todo
-from app.model.status import STATUS
+from app.model.status import Status
 from app.model.response import Response
-from app.model.http_status import HTTP_STATUS
+from app.model.http_status import HttpStatus
 
 bp = Blueprint("todo", __name__, url_prefix="/todos")
 DB = {}
@@ -15,18 +15,18 @@ def create_todo():
         return (
             jsonify(
                 Response(
-                    HTTP_STATUS.BAD_REQUEST,
+                    HttpStatus.BAD_REQUEST,
                     "Impossible blank content or null content",
                 ).covert_json(),
             ),
-            HTTP_STATUS.BAD_REQUEST,
+            HttpStatus.BAD_REQUEST,
         )
 
-    new_todo = Todo(status=STATUS.YET, content=request_data["content"])
+    new_todo = Todo(status=Status.YET, content=request_data["content"])
     DB[new_todo.id] = new_todo
     return jsonify(
         Response(
-            HTTP_STATUS.OK, "Create Todo Success", new_todo.convert_json()
+            HttpStatus.OK, "Create Todo Success", new_todo.convert_json()
         ).covert_json(),
     )
 
@@ -37,14 +37,14 @@ def get_todo(todo_id):
         return (
             jsonify(
                 Response(
-                    HTTP_STATUS.NOT_FOUND, f"Not Found todo-id: {todo_id}"
+                    HttpStatus.NOT_FOUND, f"Not Found todo-id: {todo_id}"
                 ).covert_json(),
             ),
-            HTTP_STATUS.NOT_FOUND,
+            HttpStatus.NOT_FOUND,
         )
     return jsonify(
         Response(
-            HTTP_STATUS.OK, "Read Todo Success", DB[todo_id].convert_json()
+            HttpStatus.OK, "Read Todo Success", DB[todo_id].convert_json()
         ).covert_json()
     )
 
@@ -54,7 +54,7 @@ def get_all_todo():
     all_todo_list = list(map(lambda x: DB[x].convert_json(), DB.keys()))
     return jsonify(
         Response(
-            HTTP_STATUS.OK, "Read All Todo Success", all_todo_list
+            HttpStatus.OK, "Read All Todo Success", all_todo_list
         ).covert_json()
     )
 
@@ -65,12 +65,12 @@ def delete_todo(todo_id):
         return (
             jsonify(
                 Response(
-                    HTTP_STATUS.NOT_FOUND, f"Not Found todo-id: {todo_id}"
+                    HttpStatus.NOT_FOUND, f"Not Found todo-id: {todo_id}"
                 ).covert_json(),
             ),
-            HTTP_STATUS.NOT_FOUND,
+            HttpStatus.NOT_FOUND,
         )
     del DB[todo_id]
     return jsonify(
-        Response(HTTP_STATUS.OK, "Delete Todo Success").covert_json(),
+        Response(HttpStatus.OK, "Delete Todo Success").covert_json(),
     )

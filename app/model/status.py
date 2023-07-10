@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class STATUS(str, Enum):
+class Status(str, Enum):
     YET = "YET"
     PROCESS = "PROCESS"
     DONE = "DONE"
