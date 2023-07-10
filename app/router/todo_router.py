@@ -11,7 +11,7 @@ DB = {}
 @bp.route("", methods=("POST",))
 def create_todo():
     request_data = request.get_json()
-    if not request_data or len(request_data["content"]) <= 0:
+    if not request_data.get("content"):
         return (
             jsonify(
                 Response(
@@ -76,10 +76,18 @@ def delete_todo(todo_id):
     )
 
 
+@bp.route("", methods=("DELETE",))
+def clear_all_todo():
+    DB.clear()
+    return jsonify(
+        Response(HttpStatus.OK, "Clear All Todo Success").covert_json(),
+    )
+
+
 @bp.route("/<int:todo_id>/status", methods=("PATCH",))
 def update_todo_status(todo_id):
     request_data = request.get_json()
-    if not request_data or len(request_data["status"]) <= 0:
+    if not request_data.get("status"):
         return (
             jsonify(
                 Response(
@@ -123,7 +131,7 @@ def update_todo_status(todo_id):
 @bp.route("/<int:todo_id>/content", methods=("PATCH",))
 def update_todo_content(todo_id):
     request_data = request.get_json()
-    if not request_data or len(request_data["content"]) <= 0:
+    if not request_data.get("content"):
         return (
             jsonify(
                 Response(
