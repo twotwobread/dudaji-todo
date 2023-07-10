@@ -3,5 +3,5 @@ from enum import Enum
 
 class Status(str, Enum):
     YET = "YET"
-    PROCESS = "PROCESS"
+    PROGRESS = "PROGRESS"
     DONE = "DONE"
