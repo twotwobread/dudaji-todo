@@ -28,7 +28,7 @@ def test_delete_all_todo_ok(test_client, create_todo):
     test_client.delete("/todos")
     test_client.post("/todos", json=create_todo.convert_json())
     # when
-    response = test_client.delete(f"/todos")
+    response = test_client.delete("/todos")
     todo_list_length = len(
         json.loads(test_client.get("/todos").get_data())["data"]
     )
