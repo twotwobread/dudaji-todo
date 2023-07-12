@@ -21,3 +21,8 @@ def test_client():
 def create_todo():
     todo = Todo(status=Status.YET, content="content")
     return todo
+
+
+@pytest.fixture(scope="module")
+def create_todo_list():
+    return [Todo(status=Status.YET, content=f"content{i}") for i in range(10)]
