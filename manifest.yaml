@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: dudaji-todo
+  labels:
+    app: dudaji-todo-app
+spec:
+  containers:
+  - name: dudaji-todo-container
+    image: leesuyoung/dudaji-todo:v1.0.0
+    ports:
+    - containerPort: 5000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: dudaji-todo-service
+spec:
+  ports:
+  - name: http
+    port: 8080
+    targetPort: 5000
+  selector:
+    app: dudaji-todo-app
+  type: NodePort
