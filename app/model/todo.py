@@ -34,10 +34,10 @@ class Todo:
     def status(self, status):
         self.__status = status
 
-    def convert_json(self) -> dict:
-        return {
-            "id": self.__id,
-            "status": self.__status,
-            "content": self.__content,
-            "created_at": self.__created_at,
-        }
+    def to_json(self) -> dict:
+        return dict(
+            id=self.__id,
+            status=self.__status,
+            content=self.__content,
+            created_at=self.__created_at,
+        )
